@@ -64,9 +64,6 @@ public class AutomataHash {
         AutomataHash.estadosFinales.put("s1", 0);
         AutomataHash.estadosFinales.put("s2", 1);
 
-//        System.out.print("Introduce una cadena: ");
-//        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//        String cadena = br.readLine();
         String cadena = "acbbbab"; //aaabc = aceptada, aaad = rechazada, ac = rechazada, acbbbab = aceptada
 
         AutomataHash aut = new AutomataHash(cadena);

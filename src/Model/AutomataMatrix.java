@@ -13,7 +13,7 @@ import java.util.List;
  * 
  * @author rms
  */
-public class AutomataMatriz {
+public class AutomataMatrix {
 
     private final String cadena1;
     private final char[] cadena;
@@ -28,7 +28,7 @@ public class AutomataMatriz {
     @param cadena Cadena recibida
     @param transicion Tabla de transición recibida
      */
-    public AutomataMatriz(String alfabeto, String cadena, int[][] transicion) {
+    public AutomataMatrix(String alfabeto, String cadena, int[][] transicion) {
         this.cadena1 = cadena;
         this.alfabeto = new ArrayList<>();
         this.cadena = cadena.toCharArray();
@@ -110,7 +110,7 @@ public class AutomataMatriz {
             {2, 2, 2, 1}
         };
 
-        AutomataMatriz aut = new AutomataMatriz(alfabeto, cadena, transicion);
+        AutomataMatrix aut = new AutomataMatrix(alfabeto, cadena, transicion);
         aut.automata();
     }
 
