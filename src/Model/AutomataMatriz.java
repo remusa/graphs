@@ -43,14 +43,14 @@ public class AutomataMatriz {
 
     /**
     Método para mostrar los datos recibidos e iniciar el procedimiento
-    */
+     */
     public void imprimir() {
         // Alfabeto
         System.out.println("Alfabeto: " + alfabeto);
-        
+
         // Cadena
         System.out.println("Cadena: '" + cadena1 + "'");
-        
+
         // Tabla de transición
         System.out.println("Tabla de transición: ");
         for (int i = 0; i < filas; i++) {   //recorremos filas
@@ -64,7 +64,7 @@ public class AutomataMatriz {
     public void automata() {
         // Imprimimos
         imprimir();
-        
+
         // Variables
         char caracterActual;
         int indice; //indice-columna a la que pertenece en la tabla de transición (alfabeto en la parte de arriba)
@@ -87,7 +87,7 @@ public class AutomataMatriz {
 
         // Estado final
         System.out.println("Estado final: [s" + estado + "]");
-        
+
         // Estado de aceptación
         if (transicion[estado][columnas - 1] == 1) { //checamos si el estado en el que termina es aceptado
             valida = true;

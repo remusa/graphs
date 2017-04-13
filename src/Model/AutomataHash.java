@@ -17,7 +17,7 @@ public class AutomataHash {
     private String estadoActual;
     private final String cadena;
     private boolean valida;
-    private static final HashMap<String, String> transiciones = new HashMap<>(); 
+    private static final HashMap<String, String> transiciones = new HashMap<>();
     private static final HashMap<String, Integer> estadosFinales = new HashMap<>();
 
     public AutomataHash(String cad) {
