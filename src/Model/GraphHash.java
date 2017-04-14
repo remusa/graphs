@@ -48,9 +48,6 @@ public class GraphHash {
         }
 
         type = checkType();
-//        simple = checkSimple();
-        euler = checkEuler();
-        hamilton = checkHamilton();
 
         System.out.println("\nFinal state: \t" + state);
         System.out.println("Value: \t\t" + graphMatrix.get(state));
@@ -69,6 +66,8 @@ public class GraphHash {
         if (initialState.charAt(0) == state.charAt(2)) {
             type = "Cycle";
             simple = checkSimple(route.substring(1, route.length() - 1));
+            euler = checkEuler();
+            hamilton = checkHamilton();
         } else {
             type = "Trajectory";
             simple = checkSimple(route);
