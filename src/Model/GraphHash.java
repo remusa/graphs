@@ -46,6 +46,7 @@ public class GraphHash {
         }
 
         type = checkType();
+        simple = checkSimple();
         euler = checkEuler();
         hamilton = checkHamilton();
 
@@ -57,6 +58,28 @@ public class GraphHash {
         System.out.println("Hamilton: \t" + String.valueOf(hamilton));
     }
 
+    /**
+    Cycle or Trajectory
+    @return 
+     */
+    private String checkType() {
+        if (initialState.charAt(0) == state.charAt(2)) {
+            type = "Cycle";
+        } else {
+            type = "Trajectory";
+        }
+        return type;
+    }
+    
+    /**
+    Simple or not
+    @return 
+     */
+    private boolean checkSimple() {
+
+        return simple;
+    }
+    
     /**
     Euler or not
     @return 
@@ -73,19 +96,6 @@ public class GraphHash {
     private boolean checkHamilton() {
 
         return hamilton;
-    }
-
-    /**
-    Cycle or Trajectory
-    @return 
-     */
-    private String checkType() {
-        if (initialState.charAt(0) == state.charAt(2)) {
-            type = "Cycle";
-        } else {
-            type = "Trajectory";
-        }
-        return type;
     }
 
     public void print() {
