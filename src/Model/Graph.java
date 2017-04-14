@@ -15,10 +15,10 @@ import javax.swing.table.TableModel;
  */
 public class Graph {
 
-    private final HashMap<String, Integer> table;
     private TableModel model;
     private final int noColumns;
     private final int noRows;
+    private final HashMap<String, Integer> table;
 
     public Graph(TableModel model) {
         model = this.model;
