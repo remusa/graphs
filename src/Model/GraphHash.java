@@ -46,7 +46,7 @@ public class GraphHash {
         }
 
         type = checkType();
-        simple = checkSimple();
+//        simple = checkSimple();
         euler = checkEuler();
         hamilton = checkHamilton();
 
@@ -65,8 +65,10 @@ public class GraphHash {
     private String checkType() {
         if (initialState.charAt(0) == state.charAt(2)) {
             type = "Cycle";
+            simple = checkSimple();
         } else {
             type = "Trajectory";
+            simple = checkSimple();
         }
         return type;
     }
