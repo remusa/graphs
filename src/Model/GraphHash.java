@@ -65,23 +65,32 @@ public class GraphHash {
     private String checkType() {
         if (initialState.charAt(0) == state.charAt(2)) {
             type = "Cycle";
-            simple = checkSimple();
+            simple = checkSimple(route.substring(1, route.length() - 1));
         } else {
             type = "Trajectory";
-            simple = checkSimple();
+            simple = checkSimple(route);
         }
         return type;
     }
-    
+
     /**
     Simple or not
     @return 
      */
-    private boolean checkSimple() {
-
+    private boolean checkSimple(String route) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        for (char ch : route.toCharArray()) {
+            if (map.containsKey(ch)) {
+                int val = map.get(ch);
+                map.put(ch, val + 1);
+            } else {
+                map.put(ch, 1);
+            }
+        }
+        System.out.println(map);
         return simple;
     }
-    
+
     /**
     Euler or not
     @return 
