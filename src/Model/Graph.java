@@ -14,9 +14,9 @@ import javax.swing.table.TableModel;
  * 
  * @author rms
  */
-public class Graph {
+public final class Graph {
 
-    public final HashMap<String, String> graphMatrix = new HashMap<>();
+    public HashMap<String, String> graph = new HashMap<>();
     private final TableModel model;
     private final String route;
     private final String initialState;
@@ -55,6 +55,18 @@ public class Graph {
         this.numberNodes = numberNodes();
         this.noColumns = model.getColumnCount();
         this.noRows = model.getRowCount();
+        this.graph = convertTabletoMap();
+    }
+
+    public HashMap<String, String> convertTabletoMap() {
+        HashMap<String, String> hash = new HashMap<>();
+        int charCode = 65; //A
+        for (int i = 0; i < noRows; i++) {
+            for (int j = 0; j < noColumns; j++) {
+                hash.put(Character.toString((char) (charCode + i)) + "," + model.getColumnName(j), (String) model.getValueAt(i, j));
+            }
+        }
+        return hash;
     }
 
     public void automata() {
@@ -62,23 +74,23 @@ public class Graph {
 
         for (int i = 1; i < route.length(); i++) {
             state = state.charAt(0) + "," + route.charAt(i);
-            System.out.println("State " + i + ": " + state + "\tvalue: " + graphMatrix.get(state));
-            if (graphMatrix.get(state).equals("0")) {
+            System.out.println("State " + i + ": " + state + "\tvalue: " + graph.get(state));
+            if (graph.get(state).equals("0")) {
                 System.out.println("No es una ruta");
                 break;
-            } else if (graphMatrix.get(state).equals("1")
-                    || graphMatrix.get(state).equals("-")) {
+            } else if (graph.get(state).equals("1")
+                    || graph.get(state).equals("-")) {
                 state = state.charAt(2) + "," + route.charAt(i);
             }
         }
 
-        if (graphMatrix.containsKey(state)) {
+        if (graph.containsKey(state)) {
             type = checkType();
 
             System.out.println("\n");
             System.out.println("Route: \t\t" + route);
-            System.out.println("Initial state: \t" + initialState + "\tvalue: \t" + graphMatrix.get(initialState));
-            System.out.println("Final state: \t" + state + "\tvalue: \t" + graphMatrix.get(state));
+            System.out.println("Initial state: \t" + initialState + "\tvalue: \t" + graph.get(initialState));
+            System.out.println("Final state: \t" + state + "\tvalue: \t" + graph.get(state));
             System.out.println("Type: \t\t" + type);
             System.out.println("Simple: \t" + String.valueOf(simple));
             if ("Cycle".equals(type)) {
@@ -177,13 +189,13 @@ public class Graph {
     }
 
     public void print() {
-//        graphMatrix.keySet().forEach((name) -> {
+//        graph.keySet().forEach((name) -> {
 //            String key = name;
-//            String value = graphMatrix.get(name);
+//            String value = graph.get(name);
 //            System.out.println(key + " " + value);
 //        });
-//        System.out.println(Arrays.asList(graphMatrix));
-        System.out.println(Collections.singletonList(graphMatrix));
+//        System.out.println(Arrays.asList(graph));
+        System.out.println(Collections.singletonList(graph));
     }
 
     public String getType() {

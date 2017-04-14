@@ -23,17 +23,17 @@ public class Run {
         B   1   -   1
         C   1   1   -
          */
-        aut.graphMatrix.put("A,A", "-");
-        aut.graphMatrix.put("A,B", "1");
-        aut.graphMatrix.put("A,C", "1");
+        aut.graph.put("A,A", "-");
+        aut.graph.put("A,B", "1");
+        aut.graph.put("A,C", "1");
 
-        aut.graphMatrix.put("B,A", "1");
-        aut.graphMatrix.put("B,B", "-");
-        aut.graphMatrix.put("B,C", "1");
+        aut.graph.put("B,A", "1");
+        aut.graph.put("B,B", "-");
+        aut.graph.put("B,C", "1");
 
-        aut.graphMatrix.put("C,A", "1");
-        aut.graphMatrix.put("C,B", "1");
-        aut.graphMatrix.put("C,C", "-");
+        aut.graph.put("C,A", "1");
+        aut.graph.put("C,B", "1");
+        aut.graph.put("C,C", "-");
 
         aut.automata();
 
@@ -48,35 +48,35 @@ public class Run {
 //        D   1   1   1   -   1
 //        E   0   1   0   1   -
 //         */
-//        aut.graphMatrix.put("A,A", "-");
-//        aut.graphMatrix.put("A,B", "1");
-//        aut.graphMatrix.put("A,C", "1");
-//        aut.graphMatrix.put("A,D", "1");
-//        aut.graphMatrix.put("A,E", "1+");
+//        aut.graph.put("A,A", "-");
+//        aut.graph.put("A,B", "1");
+//        aut.graph.put("A,C", "1");
+//        aut.graph.put("A,D", "1");
+//        aut.graph.put("A,E", "1+");
 //
-//        aut.graphMatrix.put("B,A", "1");
-//        aut.graphMatrix.put("B,B", "-");
-//        aut.graphMatrix.put("B,C", "1");
-//        aut.graphMatrix.put("B,D", "1");
-//        aut.graphMatrix.put("B,E", "1");
+//        aut.graph.put("B,A", "1");
+//        aut.graph.put("B,B", "-");
+//        aut.graph.put("B,C", "1");
+//        aut.graph.put("B,D", "1");
+//        aut.graph.put("B,E", "1");
 //
-//        aut.graphMatrix.put("C,A", "1");
-//        aut.graphMatrix.put("C,B", "1");
-//        aut.graphMatrix.put("C,C", "-");
-//        aut.graphMatrix.put("C,D", "1");
-//        aut.graphMatrix.put("C,E", "1+");
+//        aut.graph.put("C,A", "1");
+//        aut.graph.put("C,B", "1");
+//        aut.graph.put("C,C", "-");
+//        aut.graph.put("C,D", "1");
+//        aut.graph.put("C,E", "1+");
 //
-//        aut.graphMatrix.put("D,A", "1");
-//        aut.graphMatrix.put("D,B", "1");
-//        aut.graphMatrix.put("D,C", "1");
-//        aut.graphMatrix.put("D,D", "-");
-//        aut.graphMatrix.put("D,E", "1");
+//        aut.graph.put("D,A", "1");
+//        aut.graph.put("D,B", "1");
+//        aut.graph.put("D,C", "1");
+//        aut.graph.put("D,D", "-");
+//        aut.graph.put("D,E", "1");
 //
-//        aut.graphMatrix.put("E,A", "1+");
-//        aut.graphMatrix.put("E,B", "1");
-//        aut.graphMatrix.put("E,C", "1+");
-//        aut.graphMatrix.put("E,D", "1");
-//        aut.graphMatrix.put("E,E", "-");
+//        aut.graph.put("E,A", "1+");
+//        aut.graph.put("E,B", "1");
+//        aut.graph.put("E,C", "1+");
+//        aut.graph.put("E,D", "1");
+//        aut.graph.put("E,E", "-");
 //
 //        aut.automata();
     }
