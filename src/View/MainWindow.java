@@ -181,7 +181,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void btnGenerateMatrixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateMatrixActionPerformed
         try {
             int noNodes = Integer.parseInt(tfNodes.getText());
-            
+
             tbMatrix.setEnabled(true);
 
             DefaultTableModel model = new DefaultTableModel();
@@ -202,7 +202,7 @@ public class MainWindow extends javax.swing.JFrame {
         TableModel model = tbMatrix.getModel();
         System.out.println("Filas: " + model.getRowCount());
         System.out.println("Columnas: " + model.getColumnCount());
-        
+
         Graph graph = new Graph(tfRoute.getText(), model);
         graph.print();
     }//GEN-LAST:event_btnCalculateGraphActionPerformed
