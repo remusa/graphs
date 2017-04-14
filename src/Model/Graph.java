@@ -185,7 +185,7 @@ public class Graph {
 //        System.out.println(Arrays.asList(graphMatrix));
         System.out.println(Collections.singletonList(graphMatrix));
     }
-    
+
     public String getType() {
         return type;
     }

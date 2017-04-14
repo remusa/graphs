@@ -212,7 +212,7 @@ public class MainWindow extends javax.swing.JFrame {
             tfRoute.setEnabled(true);
             btnCalculateGraph.setEnabled(true);
         } catch (NumberFormatException e) {
-            Mensajes.falla(this, "Introduce un número de nodos");
+            Mensajes.falla(this, "Introduce el número de nodos");
         }
     }//GEN-LAST:event_btnGenerateMatrixActionPerformed
 
@@ -256,7 +256,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_tfRouteKeyTyped
 
     private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
-        Interfaz.limpiarElementos(tfNodes, tfRoute, tbMatrix, bgType, cbSimple, cbEuler, cbHamilton);
+        Interfaz.limpiarElementos(tfNodes, tfRoute, tbMatrix, bgType, cbSimple, cbEuler, cbHamilton, btnCalculateGraph);
         tfNodes.requestFocus();
     }//GEN-LAST:event_btnCleanActionPerformed
 
