@@ -22,6 +22,7 @@ public class GraphHash {
     private boolean simple;
     private boolean euler;
     private boolean hamilton;
+    private boolean valid;
 
     public GraphHash(String route) {
         this.route = route;
@@ -30,6 +31,7 @@ public class GraphHash {
         this.simple = false;
         this.euler = false;
         this.hamilton = false;
+        this.valid = false;
     }
 
     public void automata() {
@@ -39,10 +41,10 @@ public class GraphHash {
         for (int i = 1; i < route.length(); i++) {
             state = state.charAt(0) + "," + route.charAt(i);
             System.out.println("State " + i + ": " + state + "\t\tvalue: " + graphMatrix.get(state));
-
             if (graphMatrix.get(state).equals("1")) {
                 state = state.charAt(2) + "," + route.charAt(i);
             }
+            valid = true;
         }
 
         type = checkType();
@@ -53,6 +55,7 @@ public class GraphHash {
         System.out.println("\nFinal state: \t" + state);
         System.out.println("Value: \t\t" + graphMatrix.get(state));
         System.out.println("Type: \t\t" + type);
+        System.out.println("Valid: \t\t" + String.valueOf(valid));
         System.out.println("Simple: \t" + String.valueOf(simple));
         System.out.println("Euler: \t\t" + String.valueOf(euler));
         System.out.println("Hamilton: \t" + String.valueOf(hamilton));
@@ -87,8 +90,13 @@ public class GraphHash {
                 map.put(ch, 1);
             }
         }
-        System.out.println(map);
-        return simple;
+        int greaterValue = 0;
+        for (Integer value : map.values()) {
+            if (value > greaterValue) {
+                greaterValue = value;
+            }
+        }
+        return greaterValue == 1;
     }
 
     /**
