@@ -17,6 +17,7 @@ import javax.swing.table.TableModel;
 public final class Graph {
 
     public HashMap<String, String> graph = new HashMap<>();
+    private HashMap<String, String> paths = new HashMap<>();
     private final TableModel model;
     private final String route;
     private final String initialState;
@@ -70,19 +71,23 @@ public final class Graph {
     }
 
     public void automata() {
-        print();
+        System.out.println("Graph: ");
+        print(graph);
 
         for (int i = 1; i < route.length(); i++) {
             state = state.charAt(0) + "," + route.charAt(i);
+            paths.put(state, graph.get(state));
             System.out.println("State " + i + ": " + state + "\tvalue: " + graph.get(state));
             if (graph.get(state).equals("0")) {
                 System.out.println("No es una ruta");
                 break;
-            } else if (graph.get(state).equals("1")
-                    || graph.get(state).equals("-")) {
+            } else if (graph.get(state).equals("1") || graph.get(state).equals("-")) {
                 state = state.charAt(2) + "," + route.charAt(i);
             }
         }
+
+        System.out.println("Path: ");
+        print(paths);
 
         if (graph.containsKey(state)) {
             type = checkType();
@@ -188,14 +193,14 @@ public final class Graph {
         return hash.size();
     }
 
-    public void print() {
-//        graph.keySet().forEach((name) -> {
+    public void print(HashMap<String, String> map) {
+//        map.keySet().forEach((name) -> {
 //            String key = name;
-//            String value = graph.get(name);
+//            String value = map.get(name);
 //            System.out.println(key + " " + value);
 //        });
-//        System.out.println(Arrays.asList(graph));
-        System.out.println(Collections.singletonList(graph));
+//        System.out.println(Arrays.asList(map));
+        System.out.println(Collections.singletonList(map));
     }
 
     public String getType() {

@@ -18,6 +18,8 @@ import javax.swing.table.TableModel;
  */
 public class MainWindow extends javax.swing.JFrame {
 
+    private int noNodes;
+
     /** Creates new form View */
     public MainWindow() {
         initComponents();
@@ -159,21 +161,16 @@ public class MainWindow extends javax.swing.JFrame {
 
         bgType.add(rbTrajectory);
         rbTrajectory.setText("Trayectoria");
-        rbTrajectory.setEnabled(false);
 
         bgType.add(rbCycle);
         rbCycle.setText("Ciclo");
-        rbCycle.setEnabled(false);
 
         cbSimple.setText("Simple");
         cbSimple.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        cbSimple.setEnabled(false);
 
         cbEuler.setText("Euler");
-        cbEuler.setEnabled(false);
 
         cbHamilton.setText("Hamilton");
-        cbHamilton.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -249,7 +246,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void btnGenerateMatrixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateMatrixActionPerformed
         try {
-            int noNodes = Integer.parseInt(tfNodes.getText());
+            noNodes = Integer.parseInt(tfNodes.getText());
 
             DefaultTableModel model = new DefaultTableModel();
             model.setRowCount(noNodes);
@@ -289,13 +286,16 @@ public class MainWindow extends javax.swing.JFrame {
             if (graph.isHamilton()) {
                 cbHamilton.setSelected(true);
             }
-        } catch (Exception e) {
+        } catch (StringIndexOutOfBoundsException e) {
             Mensajes.falla(this, "Introduce una ruta");
+        } catch (NullPointerException e) {
+            Mensajes.falla(this, "Introduce valores del grafo");
         }
     }//GEN-LAST:event_btnCalculateGraphActionPerformed
 
     private void tfRouteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfRouteKeyTyped
-        Validaciones.alfabetico(evt, 10, tfNodes);
+        int init = 65; //A
+        Validaciones.alfabeticoMayusculas(evt, 10, tfNodes, (char) init, (char) (init + noNodes - 1));
     }//GEN-LAST:event_tfRouteKeyTyped
 
     private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
