@@ -31,11 +31,11 @@ public class Graph {
         this.route = route;
         this.numberNodes = numberNodes();
 
-        for (int i = 0; i < noColumns; i++) {
-            for (int j = 0; j < noRows; j++) {
-                table.put(model.getColumnName(i), j);
-            }
-        }
+//        for (int i = 0; i < noColumns; i++) {
+//            for (int j = 0; j < noRows; j++) {
+//                table.put(model.getColumnName(i), j);
+//            }
+//        }
     }
 
     public int numberNodes() {

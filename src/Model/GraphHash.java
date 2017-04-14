@@ -19,11 +19,17 @@ public class GraphHash {
     private final String initialState;
     private String state;
     private String type;
+    private boolean simple;
+    private boolean euler;
+    private boolean hamilton;
 
     public GraphHash(String route) {
         this.route = route;
         this.initialState = route.charAt(0) + "," + route.charAt(1);
         this.state = route.charAt(0) + "," + route.charAt(1);
+        this.simple = false;
+        this.euler = false;
+        this.hamilton = false;
     }
 
     public void automata() {
@@ -39,13 +45,47 @@ public class GraphHash {
             }
         }
 
+        type = checkType();
+        euler = checkEuler();
+        hamilton = checkHamilton();
+
+        System.out.println("\nFinal state: \t" + state);
+        System.out.println("Value: \t\t" + graphMatrix.get(state));
+        System.out.println("Type: \t\t" + type);
+        System.out.println("Simple: \t" + String.valueOf(simple));
+        System.out.println("Euler: \t\t" + String.valueOf(euler));
+        System.out.println("Hamilton: \t" + String.valueOf(hamilton));
+    }
+
+    /**
+    Euler or not
+    @return 
+     */
+    private boolean checkEuler() {
+
+        return euler;
+    }
+
+    /**
+    Hamilton or not
+    @return 
+     */
+    private boolean checkHamilton() {
+
+        return hamilton;
+    }
+
+    /**
+    Cycle or Trajectory
+    @return 
+     */
+    private String checkType() {
         if (initialState.charAt(0) == state.charAt(2)) {
             type = "Cycle";
         } else {
             type = "Trajectory";
         }
-
-        System.out.println("\nFinal state: " + state + "\tvalue: " + graphMatrix.get(state) + "\nType: " + type);
+        return type;
     }
 
     public void print() {
