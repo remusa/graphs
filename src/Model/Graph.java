@@ -5,7 +5,6 @@
  */
 package Model;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,10 +14,10 @@ import javax.swing.table.TableModel;
  * 
  * @author rms
  */
-public final class Graph {
+public class Graph {
 
+    public final HashMap<String, String> graphMatrix = new HashMap<>();
     private final TableModel model;
-    private final HashMap<String, String> graphMatrix = new HashMap<>();
     private final String route;
     private final String initialState;
     private String state;
@@ -34,6 +33,7 @@ public final class Graph {
         this.route = route;
         this.initialState = route.charAt(0) + "," + route.charAt(1);
         this.state = route.charAt(0) + "," + route.charAt(1);
+        this.type = "";
         this.simple = false;
         this.euler = false;
         this.hamilton = false;
@@ -47,6 +47,7 @@ public final class Graph {
         this.route = route;
         this.initialState = route.charAt(0) + "," + route.charAt(1);
         this.state = route.charAt(0) + "," + route.charAt(1);
+        this.type = "";
         this.simple = false;
         this.euler = false;
         this.hamilton = false;
@@ -57,10 +58,16 @@ public final class Graph {
     }
 
     public void automata() {
+        print();
+
         for (int i = 1; i < route.length(); i++) {
             state = state.charAt(0) + "," + route.charAt(i);
             System.out.println("State " + i + ": " + state + "\tvalue: " + graphMatrix.get(state));
-            if (graphMatrix.get(state).equals("1")) {
+            if (graphMatrix.get(state).equals("0")) {
+                System.out.println("No es una ruta");
+                break;
+            } else if (graphMatrix.get(state).equals("1")
+                    || graphMatrix.get(state).equals("-")) {
                 state = state.charAt(2) + "," + route.charAt(i);
             }
         }
@@ -68,7 +75,8 @@ public final class Graph {
         if (graphMatrix.containsKey(state)) {
             type = checkType();
 
-            System.out.println("\nRoute: \t\t" + route);
+            System.out.println("\n");
+            System.out.println("Route: \t\t" + route);
             System.out.println("Initial state: \t" + initialState + "\tvalue: \t" + graphMatrix.get(initialState));
             System.out.println("Final state: \t" + state + "\tvalue: \t" + graphMatrix.get(state));
             System.out.println("Type: \t\t" + type);
@@ -147,8 +155,25 @@ public final class Graph {
     @return 
      */
     private boolean checkHamilton() {
-
+        HashMap<Character, Integer> map = new HashMap<>();
+        for (char ch : route.toCharArray()) {
+            if (map.containsKey(ch)) {
+                int val = map.get(ch);
+                map.put(ch, val + 1);
+            } else {
+                map.put(ch, 1);
+            }
+        }
+        System.out.println("HAMILTON: " + map);
         return hamilton;
+    }
+
+    public int numberNodes() {
+        HashSet<Character> hash = new HashSet<>();
+        for (int i = 0; i < route.length(); i++) {
+            hash.add(route.charAt(i));
+        }
+        return hash.size();
     }
 
     public void print() {
@@ -160,59 +185,21 @@ public final class Graph {
 //        System.out.println(Arrays.asList(graphMatrix));
         System.out.println(Collections.singletonList(graphMatrix));
     }
-
-    public int numberNodes() {
-        HashSet<Character> hash = new HashSet<>();
-        for (int i = 0; i < route.length(); i++) {
-            hash.add(route.charAt(i));
-        }
-        return hash.size();
+    
+    public String getType() {
+        return type;
     }
 
-    public static void main(String[] args) throws IOException {
-        String route = "ACDEA";
-        Graph aut = new Graph(route);
+    public boolean isSimple() {
+        return simple;
+    }
 
-        /*
-            A   B   C   D   E
-        A   -   1   1   1   0
-        B   1   -   1   1   1
-        C   1   1   -   1   0
-        D   1   1   1   -   1
-        E   0   1   0   1   -
-         */
-        aut.graphMatrix.put("A,A", "-");
-        aut.graphMatrix.put("A,B", "1");
-        aut.graphMatrix.put("A,C", "1");
-        aut.graphMatrix.put("A,D", "1");
-        aut.graphMatrix.put("A,E", "1+");
+    public boolean isEuler() {
+        return euler;
+    }
 
-        aut.graphMatrix.put("B,A", "1");
-        aut.graphMatrix.put("B,B", "-");
-        aut.graphMatrix.put("B,C", "1");
-        aut.graphMatrix.put("B,D", "1");
-        aut.graphMatrix.put("B,E", "1");
-
-        aut.graphMatrix.put("C,A", "1");
-        aut.graphMatrix.put("C,B", "1");
-        aut.graphMatrix.put("C,C", "-");
-        aut.graphMatrix.put("C,D", "1");
-        aut.graphMatrix.put("C,E", "1+");
-
-        aut.graphMatrix.put("D,A", "1");
-        aut.graphMatrix.put("D,B", "1");
-        aut.graphMatrix.put("D,C", "1");
-        aut.graphMatrix.put("D,D", "-");
-        aut.graphMatrix.put("D,E", "1");
-
-        aut.graphMatrix.put("E,A", "1+");
-        aut.graphMatrix.put("E,B", "1");
-        aut.graphMatrix.put("E,C", "1+");
-        aut.graphMatrix.put("E,D", "1");
-        aut.graphMatrix.put("E,E", "-");
-
-        aut.print();
-        aut.automata();
+    public boolean isHamilton() {
+        return hamilton;
     }
 
 }

@@ -6,6 +6,7 @@
 package View;
 
 import Model.Graph;
+import comportamiento.Interfaz;
 import comportamiento.Mensajes;
 import comportamiento.Validaciones;
 import javax.swing.table.DefaultTableModel;
@@ -31,6 +32,7 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bgType = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -38,12 +40,12 @@ public class MainWindow extends javax.swing.JFrame {
         tfRoute = new javax.swing.JTextField();
         btnGenerateMatrix = new javax.swing.JButton();
         btnCalculateGraph = new javax.swing.JButton();
+        btnClean = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbMatrix = new javax.swing.JTable();
-        cbTrajectory = new javax.swing.JCheckBox();
-        cbCycle = new javax.swing.JCheckBox();
-        cbTrajectorySimple = new javax.swing.JCheckBox();
-        cbCycleSImple = new javax.swing.JCheckBox();
+        rbTrajectory = new javax.swing.JRadioButton();
+        rbCycle = new javax.swing.JRadioButton();
+        cbSimple = new javax.swing.JCheckBox();
         cbEuler = new javax.swing.JCheckBox();
         cbHamilton = new javax.swing.JCheckBox();
 
@@ -85,6 +87,13 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        btnClean.setText("Limpiar");
+        btnClean.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCleanActionPerformed(evt);
+            }
+        });
+
         tbMatrix.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -99,17 +108,22 @@ public class MainWindow extends javax.swing.JFrame {
         tbMatrix.setEnabled(false);
         jScrollPane1.setViewportView(tbMatrix);
 
-        cbTrajectory.setText("Trayectoria");
+        bgType.add(rbTrajectory);
+        rbTrajectory.setText("Trayectoria");
+        rbTrajectory.setEnabled(false);
 
-        cbCycle.setText("Ciclo");
+        bgType.add(rbCycle);
+        rbCycle.setText("Ciclo");
+        rbCycle.setEnabled(false);
 
-        cbTrajectorySimple.setText("Simple");
-
-        cbCycleSImple.setText("Simple");
+        cbSimple.setText("Simple");
+        cbSimple.setEnabled(false);
 
         cbEuler.setText("Euler");
+        cbEuler.setEnabled(false);
 
         cbHamilton.setText("Hamilton");
+        cbHamilton.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,21 +132,6 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbTrajectory)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(cbCycle)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cbCycleSImple)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbHamilton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbEuler))
-                            .addComponent(cbTrajectorySimple)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,8 +143,22 @@ public class MainWindow extends javax.swing.JFrame {
                             .addComponent(tfRoute))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnGenerateMatrix)
-                            .addComponent(btnCalculateGraph))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnGenerateMatrix)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnClean))
+                            .addComponent(btnCalculateGraph)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rbTrajectory)
+                            .addComponent(rbCycle))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cbEuler)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbHamilton))
+                            .addComponent(cbSimple))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(153, 153, 153)
@@ -161,7 +174,8 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(tfNodes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGenerateMatrix))
+                    .addComponent(btnGenerateMatrix)
+                    .addComponent(btnClean))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfRoute, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -171,14 +185,13 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbTrajectory)
-                    .addComponent(cbTrajectorySimple))
+                    .addComponent(rbTrajectory)
+                    .addComponent(cbSimple))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbEuler)
                     .addComponent(cbHamilton)
-                    .addComponent(cbCycle)
-                    .addComponent(cbCycleSImple))
+                    .addComponent(rbCycle))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -189,11 +202,11 @@ public class MainWindow extends javax.swing.JFrame {
     private void btnGenerateMatrixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateMatrixActionPerformed
         try {
             int noNodes = Integer.parseInt(tfNodes.getText());
-            
+
             DefaultTableModel model = new DefaultTableModel();
             model.setRowCount(noNodes);
             model.setColumnCount(noNodes);
-            
+
             tbMatrix.setModel(model);
             tbMatrix.setEnabled(true);
             tfRoute.setEnabled(true);
@@ -204,17 +217,35 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGenerateMatrixActionPerformed
 
     private void tfNodesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfNodesKeyTyped
-        Validaciones.entero(evt, 1, tfNodes);
+        Validaciones.entero(evt, 2, tfNodes);
     }//GEN-LAST:event_tfNodesKeyTyped
 
     private void btnCalculateGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalculateGraphActionPerformed
         TableModel model = tbMatrix.getModel();
         System.out.println("Columns: " + model.getColumnCount());
         System.out.println("Rows: " + model.getRowCount());
-        
+
         try {
             Graph graph = new Graph(tfRoute.getText(), model);
             graph.print();
+
+            if (graph.getType().equals("Trajectory")) {
+                rbTrajectory.setSelected(true);
+            } else if (graph.getType().equals("Cycle")) {
+                rbCycle.setSelected(true);
+            }
+
+            if (graph.isSimple()) {
+                cbSimple.setSelected(true);
+            }
+
+            if (graph.isEuler()) {
+                cbEuler.setSelected(true);
+            }
+
+            if (graph.isHamilton()) {
+                cbHamilton.setSelected(true);
+            }
         } catch (Exception e) {
             Mensajes.falla(this, "Introduce una ruta");
         }
@@ -223,6 +254,11 @@ public class MainWindow extends javax.swing.JFrame {
     private void tfRouteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfRouteKeyTyped
         Validaciones.alfabetico(evt, 10, tfNodes);
     }//GEN-LAST:event_tfRouteKeyTyped
+
+    private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
+        Interfaz.limpiarElementos(tfNodes, tfRoute, tbMatrix, bgType, cbSimple, cbEuler, cbHamilton);
+        tfNodes.requestFocus();
+    }//GEN-LAST:event_btnCleanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -267,18 +303,19 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup bgType;
     private javax.swing.JButton btnCalculateGraph;
+    private javax.swing.JButton btnClean;
     private javax.swing.JButton btnGenerateMatrix;
-    private javax.swing.JCheckBox cbCycle;
-    private javax.swing.JCheckBox cbCycleSImple;
     private javax.swing.JCheckBox cbEuler;
     private javax.swing.JCheckBox cbHamilton;
-    private javax.swing.JCheckBox cbTrajectory;
-    private javax.swing.JCheckBox cbTrajectorySimple;
+    private javax.swing.JCheckBox cbSimple;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton rbCycle;
+    private javax.swing.JRadioButton rbTrajectory;
     private javax.swing.JTable tbMatrix;
     private javax.swing.JTextField tfNodes;
     private javax.swing.JTextField tfRoute;
