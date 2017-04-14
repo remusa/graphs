@@ -54,8 +54,10 @@ public class GraphHash {
         System.out.println("Type: \t\t" + type);
         System.out.println("Valid: \t\t" + String.valueOf(valid));
         System.out.println("Simple: \t" + String.valueOf(simple));
-        System.out.println("Euler: \t\t" + String.valueOf(euler));
-        System.out.println("Hamilton: \t" + String.valueOf(hamilton));
+        if ("Cycle".equals(type)) {
+            System.out.println("Euler: \t\t" + String.valueOf(euler));
+            System.out.println("Hamilton: \t" + String.valueOf(hamilton));
+        }
     }
 
     /**
