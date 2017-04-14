@@ -16,16 +16,14 @@ public class GraphHash {
 
     private final HashMap<String, String> graphMatrix = new HashMap<>();
     private final String route;
-    private String initialState;
+    private final String initialState;
     private String state;
     private String type;
-    private boolean valid;
 
     public GraphHash(String route) {
         this.route = route;
         this.initialState = route.charAt(0) + "," + route.charAt(1);
         this.state = route.charAt(0) + "," + route.charAt(1);
-        this.valid = false;
     }
 
     public void automata() {
@@ -38,7 +36,6 @@ public class GraphHash {
 
             if (graphMatrix.get(state).equals("1")) {
                 state = state.charAt(2) + "," + route.charAt(i);
-                valid = true;
             }
         }
 
@@ -48,7 +45,7 @@ public class GraphHash {
             type = "Trajectory";
         }
 
-        System.out.println("\nFinal state: " + state + "\tvalue: " + graphMatrix.get(state) + "\tType: " + type);
+        System.out.println("\nFinal state: " + state + "\tvalue: " + graphMatrix.get(state) + "\nType: " + type);
     }
 
     public void print() {

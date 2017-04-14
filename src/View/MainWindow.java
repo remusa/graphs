@@ -43,6 +43,7 @@ public class MainWindow extends javax.swing.JFrame {
         cbSimple = new javax.swing.JCheckBox();
         cbEuler = new javax.swing.JCheckBox();
         cbHamilton = new javax.swing.JCheckBox();
+        tfRoute = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Grafos");
@@ -122,13 +123,14 @@ public class MainWindow extends javax.swing.JFrame {
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(tfNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnGenerateMatrix)
-                                .addGap(84, 84, 84)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfRoute)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnCalculateGraph)))
                         .addContainerGap())))
             .addGroup(layout.createSequentialGroup()
@@ -146,7 +148,8 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(tfNodes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGenerateMatrix)
-                    .addComponent(btnCalculateGraph))
+                    .addComponent(btnCalculateGraph)
+                    .addComponent(tfRoute, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -190,7 +193,7 @@ public class MainWindow extends javax.swing.JFrame {
         System.out.println("Filas: " + model.getRowCount());
         System.out.println("Columnas: " + model.getColumnCount());
         
-        Graph graph = new Graph(model);
+        Graph graph = new Graph(tfRoute.getText(), model);
         graph.printGraph();
     }//GEN-LAST:event_btnCalculateGraphActionPerformed
 
@@ -249,5 +252,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbMatrix;
     private javax.swing.JTextField tfNodes;
+    private javax.swing.JTextField tfRoute;
     // End of variables declaration//GEN-END:variables
 }

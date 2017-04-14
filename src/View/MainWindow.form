@@ -51,13 +51,14 @@
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="tfNodes" min="-2" pref="58" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnGenerateMatrix" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="tfRoute" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnCalculateGraph" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -83,6 +84,7 @@
                   <Component id="tfNodes" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnGenerateMatrix" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnCalculateGraph" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfRoute" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="200" max="-2" attributes="0"/>
@@ -183,6 +185,8 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Hamilton"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfRoute">
     </Component>
   </SubComponents>
 </Form>
