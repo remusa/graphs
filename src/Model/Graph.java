@@ -6,6 +6,7 @@
 package Model;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import javax.swing.table.TableModel;
@@ -14,7 +15,7 @@ import javax.swing.table.TableModel;
  * 
  * @author rms
  */
-public class Graph {
+public final class Graph {
 
     private final TableModel model;
     private final HashMap<String, String> graphMatrix = new HashMap<>();
@@ -151,11 +152,13 @@ public class Graph {
     }
 
     public void print() {
-        graphMatrix.keySet().forEach((name) -> {
-            String key = name;
-            String value = graphMatrix.get(name);
-            System.out.println(key + " " + value);
-        });
+//        graphMatrix.keySet().forEach((name) -> {
+//            String key = name;
+//            String value = graphMatrix.get(name);
+//            System.out.println(key + " " + value);
+//        });
+//        System.out.println(Arrays.asList(graphMatrix));
+        System.out.println(Collections.singletonList(graphMatrix));
     }
 
     public int numberNodes() {
@@ -208,8 +211,8 @@ public class Graph {
         aut.graphMatrix.put("E,D", "1");
         aut.graphMatrix.put("E,E", "-");
 
+        aut.print();
         aut.automata();
-//        aut.print();
     }
 
 }

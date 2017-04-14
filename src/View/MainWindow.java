@@ -63,6 +63,13 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        tfRoute.setEnabled(false);
+        tfRoute.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfRouteKeyTyped(evt);
+            }
+        });
+
         btnGenerateMatrix.setText("Generar");
         btnGenerateMatrix.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -71,6 +78,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         btnCalculateGraph.setText("Calcular");
+        btnCalculateGraph.setEnabled(false);
         btnCalculateGraph.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCalculateGraphActionPerformed(evt);
@@ -181,14 +189,15 @@ public class MainWindow extends javax.swing.JFrame {
     private void btnGenerateMatrixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateMatrixActionPerformed
         try {
             int noNodes = Integer.parseInt(tfNodes.getText());
-
-            tbMatrix.setEnabled(true);
-
+            
             DefaultTableModel model = new DefaultTableModel();
             model.setRowCount(noNodes);
             model.setColumnCount(noNodes);
-
+            
             tbMatrix.setModel(model);
+            tbMatrix.setEnabled(true);
+            tfRoute.setEnabled(true);
+            btnCalculateGraph.setEnabled(true);
         } catch (NumberFormatException e) {
             Mensajes.falla(this, "Introduce un número de nodos");
         }
@@ -200,12 +209,20 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void btnCalculateGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalculateGraphActionPerformed
         TableModel model = tbMatrix.getModel();
-        System.out.println("Filas: " + model.getRowCount());
-        System.out.println("Columnas: " + model.getColumnCount());
-
-        Graph graph = new Graph(tfRoute.getText(), model);
-        graph.print();
+        System.out.println("Columns: " + model.getColumnCount());
+        System.out.println("Rows: " + model.getRowCount());
+        
+        try {
+            Graph graph = new Graph(tfRoute.getText(), model);
+            graph.print();
+        } catch (Exception e) {
+            Mensajes.falla(this, "Introduce una ruta");
+        }
     }//GEN-LAST:event_btnCalculateGraphActionPerformed
+
+    private void tfRouteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfRouteKeyTyped
+        Validaciones.alfabetico(evt, 10, tfNodes);
+    }//GEN-LAST:event_tfRouteKeyTyped
 
     /**
      * @param args the command line arguments
