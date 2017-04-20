@@ -14,15 +14,15 @@ import java.io.IOException;
 public class Run {
 
     public static void main(String[] args) throws IOException {
-        String route = "ABBBC";
-        Graph aut = new Graph(route);
-
         /*
             A   B   C  
         A   -   1   1
         B   1   -   1
         C   1   1   -
          */
+        String route = "ABCA";
+        Graph aut = new Graph(route);
+
         aut.graph.put("A,A", "-");
         aut.graph.put("A,B", "1");
         aut.graph.put("A,C", "1");
@@ -37,9 +37,6 @@ public class Run {
 
         aut.automata();
 
-//        String route = "ACDEA";
-//        Graph aut = new Graph(route);
-//
 //        /*
 //            A   B   C   D   E
 //        A   -   1   1   1   0
@@ -48,6 +45,8 @@ public class Run {
 //        D   1   1   1   -   1
 //        E   0   1   0   1   -
 //         */
+//        String route = "ACDEA";
+//        Graph aut = new Graph(route);
 //        aut.graph.put("A,A", "-");
 //        aut.graph.put("A,B", "1");
 //        aut.graph.put("A,C", "1");

@@ -5,13 +5,12 @@
  */
 package Model;
 
+import javax.swing.table.TableModel;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import javax.swing.table.TableModel;
 
 /**
- * 
  * @author rms
  */
 public final class Graph {
@@ -21,8 +20,10 @@ public final class Graph {
     private final TableModel model;
     private final String route;
     private final String initialState;
+    private String finalState;
     private String state;
     private String type;
+    private String result;
     private boolean simple;
     private boolean euler;
     private boolean hamilton;
@@ -35,6 +36,7 @@ public final class Graph {
         this.initialState = route.charAt(0) + "," + route.charAt(1);
         this.state = route.charAt(0) + "," + route.charAt(1);
         this.type = "";
+        this.result = "";
         this.simple = false;
         this.euler = false;
         this.hamilton = false;
@@ -47,8 +49,10 @@ public final class Graph {
     public Graph(String route, TableModel model) {
         this.route = route;
         this.initialState = route.charAt(0) + "," + route.charAt(1);
+        this.finalState = "";
         this.state = route.charAt(0) + "," + route.charAt(1);
         this.type = "";
+        this.result = "";
         this.simple = false;
         this.euler = false;
         this.hamilton = false;
@@ -73,11 +77,13 @@ public final class Graph {
     public void automata() {
         System.out.println("Graph: ");
         print(graph);
+        result = "";
 
         for (int i = 1; i < route.length(); i++) {
             state = state.charAt(0) + "," + route.charAt(i);
             paths.put(state, graph.get(state));
-            System.out.println("State " + i + ": " + state + "\tvalue: " + graph.get(state));
+            System.out.println("State " + i + ": \t" + state + "\tvalue: " + graph.get(state));
+            result += "State " + i + ": \t" + state + "\tvalue: " + graph.get(state) + "\n";
             if (graph.get(state).equals("0")) {
                 System.out.println("No es una ruta");
                 break;
@@ -86,19 +92,30 @@ public final class Graph {
             }
         }
 
-        System.out.println("Path: ");
+        finalState = state;
+
+        System.out.print("Path: ");
         print(paths);
 
         if (graph.containsKey(state)) {
             type = checkType();
 
-            System.out.println("\n");
-            System.out.println("Route: \t\t" + route);
+            result += "\n\nRoute: \t" + route + "\n"
+                    + "Initial state: \t" + initialState + "\tvalue: " + graph.get(initialState) + "\n"
+                    + "Final state: \t" + state + "\tvalue: " + graph.get(state) + "\n"
+                    + "Type: \t" + type + "\n"
+                    + "Simple: \t" + String.valueOf(simple) + "\n";
+
+            System.out.println("\nRoute: \t\t" + route);
             System.out.println("Initial state: \t" + initialState + "\tvalue: \t" + graph.get(initialState));
             System.out.println("Final state: \t" + state + "\tvalue: \t" + graph.get(state));
             System.out.println("Type: \t\t" + type);
             System.out.println("Simple: \t" + String.valueOf(simple));
+
             if ("Cycle".equals(type)) {
+                result += "Euler: \t" + String.valueOf(euler) + "\n"
+                        + "Hamilton: \t" + String.valueOf(hamilton) + "\n";
+
                 System.out.println("Euler: \t\t" + String.valueOf(euler));
                 System.out.println("Hamilton: \t" + String.valueOf(hamilton));
             }
@@ -108,15 +125,16 @@ public final class Graph {
     }
 
     /**
-    Cycle or Trajectory
-    @return 
+     * Cycle or Trajectory
+     *
+     * @return
      */
     private String checkType() {
-        if (initialState.charAt(0) == state.charAt(2)) {
+        if (initialState.charAt(0) == finalState.charAt(2)) {
             type = "Cycle";
-            simple = checkSimple(route.substring(1, route.length() - 1));
+            simple = checkSimple(route.substring(0, route.length() - 1));
             euler = checkEuler();
-            hamilton = checkHamilton();
+            hamilton = checkHamilton(route.substring(0, route.length() - 1));
         } else {
             type = "Trajectory";
             simple = checkSimple(route);
@@ -125,8 +143,9 @@ public final class Graph {
     }
 
     /**
-    Simple or not
-    @return 
+     * Simple or not
+     *
+     * @return
      */
     private boolean checkSimple(String route) {
         HashMap<Character, Integer> map = new HashMap<>();
@@ -148,9 +167,10 @@ public final class Graph {
     }
 
     /**
-    Euler or not
-    Euler = toca mínimo una vez cada arista
-    @return 
+     * Euler path/cycle
+     * Visits every edge exactly once
+     *
+     * @return
      */
     private boolean checkEuler() {
         HashSet<Character> hash = new HashSet<>();
@@ -167,11 +187,12 @@ public final class Graph {
     }
 
     /**
-    Hamilton or not
-    Hamilton = toca solo una vez cada vértice
-    @return 
+     * Hamiltonian cycle
+     * Visits each vertex exactly once
+     *
+     * @return
      */
-    private boolean checkHamilton() {
+    private boolean checkHamilton(String route) {
         HashMap<Character, Integer> map = new HashMap<>();
         for (char ch : route.toCharArray()) {
             if (map.containsKey(ch)) {
@@ -182,7 +203,13 @@ public final class Graph {
             }
         }
         System.out.println("HAMILTON: " + map);
-        return hamilton;
+        int greaterValue = 0;
+        for (Integer value : map.values()) {
+            if (value > greaterValue) {
+                greaterValue = value;
+            }
+        }
+        return hamilton = greaterValue == 1;
     }
 
     public int numberNodes() {
@@ -217,6 +244,10 @@ public final class Graph {
 
     public boolean isHamilton() {
         return hamilton;
+    }
+
+    public String getResult() {
+        return result;
     }
 
 }
