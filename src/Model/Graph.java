@@ -5,7 +5,8 @@
  */
 package Model;
 
-import comportamiento.Mensajes;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.table.TableModel;
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,8 +17,8 @@ import java.util.HashSet;
  */
 public final class Graph {
 
-    public HashMap<String, String> graph = new HashMap<>();
-    private HashMap<String, String> paths = new HashMap<>();
+    public HashMap<String, String> graph;
+    private ArrayList<String> path;
     private final TableModel model;
     private final String route;
     private final String initialState;
@@ -34,6 +35,8 @@ public final class Graph {
     private final int noRows;
 
     public Graph(String route) {
+        this.graph = new HashMap<>();
+        this.path = new ArrayList<>();
         this.route = route;
         this.initialState = route.charAt(0) + "," + route.charAt(1);
         this.state = route.charAt(0) + "," + route.charAt(1);
@@ -50,6 +53,8 @@ public final class Graph {
     }
 
     public Graph(String route, TableModel model) {
+        this.graph = new HashMap<>();
+        this.path = new ArrayList<>();
         this.route = route;
         this.initialState = route.charAt(0) + "," + route.charAt(1);
         this.finalState = "";
@@ -80,32 +85,35 @@ public final class Graph {
 
     public void automata() {
         numberNodes = numberNodes();
-        
+
         System.out.println("Nodes: " + numberNodes);
         System.out.println("Graph: ");
         print(graph);
         result = "";
-
+        
         for (int i = 1; i < route.length(); i++) {
             state = state.charAt(0) + "," + route.charAt(i);
-            paths.put(state, graph.get(state));
             System.out.println("State " + i + ": \t" + state + "\tvalue: " + graph.get(state));
+            
+            path.add(state);
+            finalState = state;
+            
             result += "State " + i + ": \t" + state + "\tvalue: " + graph.get(state) + "\n";
-            if (graph.get(state).equals("0")) {
+
+            if (graph.get(state).equals("1") || graph.get(state).equals("-")) {
+                state = state.charAt(2) + "," + route.charAt(i - 1);
+            } else 
+                if (graph.get(state).equals("0")) {
                 System.out.println("No es una ruta");
                 result += "No es una ruta";
                 valid = false;
                 break;
-            } else if (graph.get(state).equals("1") || graph.get(state).equals("-")) {
-                state = state.charAt(2) + "," + route.charAt(i);
             }
         }
 
         if (valid) {
-            finalState = state;
-
-            System.out.print("\nPath: ");
-            print(paths);
+            
+            System.out.print("\nPath: " + Arrays.asList(path) + "\n");
 
             if (graph.containsKey(state)) {
                 type = checkType();
@@ -186,17 +194,44 @@ public final class Graph {
      * @return
      */
     private boolean checkEuler() {
-        HashSet<Character> hash = new HashSet<>();
-        for (int i = 0; i < route.length(); i++) {
-            hash.add(route.charAt(i));
-        }
-        if (hash.size() % 2 == 0) { //even number of vertices
+        boolean pathEuler = false;
 
+        if (numberNodes % 2 == 0) { //even number of vertices
+
+            //check unique edges
+            HashSet<String> uniqueEdges = new HashSet<>();
+            for (HashMap.Entry<String, String> key : graph.entrySet()) { //get unique edges
+                String keyInverted = key.getKey().charAt(2) + "," + key.getKey().charAt(0);
+                if (!uniqueEdges.contains(keyInverted) //no inverted key
+                        && key.getValue().equals("1")) { //no equal values
+                    uniqueEdges.add(key.getKey());
+                }
+            }
+
+            //check the nodes traversed by the path
+            HashSet<Character> nodesPath = new HashSet<>();
+            int counter = 0;
             
-            
-            return true;
+            for (String key : path) {
+                String keyInverted = key.charAt(2) + "," + key.charAt(0);
+                if (uniqueEdges.contains(key)
+                        || uniqueEdges.contains(keyInverted)) {
+                    counter++;
+                    nodesPath.add(key.charAt(0));
+                    nodesPath.add(key.charAt(2));
+                }
+            }
+
+            System.out.println("Counter: \t" + counter);
+            System.out.println("Nodes: \t" + nodesPath);
+
+            if (counter == uniqueEdges.size()
+                    && nodesPath.size() == numberNodes) {
+                return true;
+            }
+
         }
-        return false;
+        return pathEuler;
     }
 
     /**
