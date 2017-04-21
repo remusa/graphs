@@ -130,9 +130,10 @@ public class Run {
         C   1   1   -   1
         D   0   1   1   -
          */
-        String route = "ABDCABA";
-        //  ABDCA E:Y       CABDC E:Y              
-        //  ABDCDBA E:N     ABDCABA E:N     CABAC E:N   ABDBA E:N
+        String route = "CABDDDC";
+        //  ABDCA E:Y     CABDC E:Y              
+        //  ABDCDBA E:N   ABDCABA E:N   CABAC E:N   ABDBA E:N
+        //  CABDDDC E:N
         Graph aut = new Graph(route.toUpperCase());
 
         aut.graph.put("A,A", "-");

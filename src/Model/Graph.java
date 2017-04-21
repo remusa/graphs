@@ -90,20 +90,19 @@ public final class Graph {
         System.out.println("Graph: ");
         print(graph);
         result = "";
-        
+
         for (int i = 1; i < route.length(); i++) {
             state = state.charAt(0) + "," + route.charAt(i);
             System.out.println("State " + i + ": \t" + state + "\tvalue: " + graph.get(state));
-            
+
             path.add(state);
             finalState = state;
-            
+
             result += "State " + i + ": \t" + state + "\tvalue: " + graph.get(state) + "\n";
 
             if (graph.get(state).equals("1") || graph.get(state).equals("-")) {
                 state = state.charAt(2) + "," + route.charAt(i - 1);
-            } else 
-                if (graph.get(state).equals("0")) {
+            } else if (graph.get(state).equals("0")) {
                 System.out.println("No es una ruta");
                 result += "No es una ruta";
                 valid = false;
@@ -112,15 +111,15 @@ public final class Graph {
         }
 
         if (isValid()) {
-            
+
             System.out.print("\nPath: " + Arrays.asList(path) + "\n");
 
             if (graph.containsKey(state)) {
                 type = checkType();
 
                 result += "\n\nRoute: \t" + route + "\n"
-//                        + "Initial state: \t" + initialState + "\tvalue: " + graph.get(initialState) + "\n"
-//                        + "Final state: \t" + state + "\tvalue: " + graph.get(state) + "\n"
+                        //                        + "Initial state: \t" + initialState + "\tvalue: " + graph.get(initialState) + "\n"
+                        //                        + "Final state: \t" + state + "\tvalue: " + graph.get(state) + "\n"
                         + "Type: \t" + type + "\n"
                         + "Simple: \t" + String.valueOf(simple) + "\n";
 
@@ -211,11 +210,13 @@ public final class Graph {
             //check the nodes traversed by the path
             HashSet<Character> nodesPath = new HashSet<>();
             int counter = 0;
-            
+
             for (String key : path) {
                 String keyInverted = key.charAt(2) + "," + key.charAt(0);
-                if (uniqueEdges.contains(key)
-                        || uniqueEdges.contains(keyInverted)) {
+                if (key.charAt(0) == key.charAt(2)) {
+                    counter++;
+                } else if ((uniqueEdges.contains(key)
+                        || uniqueEdges.contains(keyInverted))) {
                     counter++;
                     nodesPath.add(key.charAt(0));
                     nodesPath.add(key.charAt(2));
