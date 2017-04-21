@@ -111,7 +111,7 @@ public final class Graph {
             }
         }
 
-        if (valid) {
+        if (isValid()) {
             
             System.out.print("\nPath: " + Arrays.asList(path) + "\n");
 
@@ -119,8 +119,8 @@ public final class Graph {
                 type = checkType();
 
                 result += "\n\nRoute: \t" + route + "\n"
-                        + "Initial state: \t" + initialState + "\tvalue: " + graph.get(initialState) + "\n"
-                        + "Final state: \t" + state + "\tvalue: " + graph.get(state) + "\n"
+//                        + "Initial state: \t" + initialState + "\tvalue: " + graph.get(initialState) + "\n"
+//                        + "Final state: \t" + state + "\tvalue: " + graph.get(state) + "\n"
                         + "Type: \t" + type + "\n"
                         + "Simple: \t" + String.valueOf(simple) + "\n";
 
@@ -305,6 +305,10 @@ public final class Graph {
 
     public String getResult() {
         return result;
+    }
+
+    public boolean isValid() {
+        return valid;
     }
 
 }

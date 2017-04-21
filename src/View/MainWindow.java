@@ -212,6 +212,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         taResult.setColumns(20);
         taResult.setRows(5);
+        taResult.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jScrollPane2.setViewportView(taResult);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -303,9 +304,9 @@ public class MainWindow extends javax.swing.JFrame {
                             || "-".equals((String) model.getValueAt(i, j))
                             || "0".equals((String) model.getValueAt(i, j)))) {
                         valid = false;
-                        error = "Introducir valores válidos: 1, 0, -" + 
-                                "\nIntroducido: " + (String) model.getValueAt(i, j) + 
-                                " en celda " + model.getColumnName(j) + model.getRowCount();
+                        error = "Introducir valores válidos: 1, 0, -"
+                                + "\nIntroducido: " + (String) model.getValueAt(i, j)
+                                + " en celda " + model.getColumnName(j) + model.getRowCount();
                         break;
                     }
                 }
@@ -315,32 +316,38 @@ public class MainWindow extends javax.swing.JFrame {
                 Graph graph = new Graph(tfRoute.getText(), model);
                 graph.automata();
 
-                if (graph.getType().equals("Trajectory")) {
-                    rbTrajectory.setSelected(true);
-                } else if (graph.getType().equals("Cycle")) {
-                    rbCycle.setSelected(true);
-                }
-                if (graph.isSimple()) {
-                    cbSimple.setSelected(true);
+                if (graph.isValid()) {
+                    if (graph.getType().equals("Trajectory")) {
+                        rbTrajectory.setSelected(true);
+                    } else if (graph.getType().equals("Cycle")) {
+                        rbCycle.setSelected(true);
+                    }
+                    if (graph.isSimple()) {
+                        cbSimple.setSelected(true);
+                    } else {
+                        cbSimple.setSelected(false);
+                    }
+                    if (graph.isEuler()) {
+                        cbEuler.setSelected(true);
+                    } else {
+                        cbEuler.setSelected(false);
+                    }
+                    if (graph.isHamilton()) {
+                        cbHamilton.setSelected(true);
+                    } else {
+                        cbHamilton.setSelected(false);
+                    }
+
+                    String lines[] = graph.getResult().split("\\r?\\n\\n");
+                    System.out.println(Arrays.toString(lines));
+                    for (int i = 0; i < lines.length; i++) {
+                        taResult.append(lines[i]);
+                    }
                 } else {
-                    cbSimple.setSelected(false);
-                }
-                if (graph.isEuler()) {
-                    cbEuler.setSelected(true);
-                } else {
-                    cbEuler.setSelected(false);
-                }
-                if (graph.isHamilton()) {
-                    cbHamilton.setSelected(true);
-                } else {
-                    cbHamilton.setSelected(false);
+                    Mensajes.falla(this, "No es una ruta");
+                    Interfaz.limpiarElementos(bgType, cbSimple, cbEuler, cbHamilton);
                 }
 
-                String lines[] = graph.getResult().split("\\r?\\n\\n");
-                System.out.println(Arrays.toString(lines));
-                for (int i = 0; i < lines.length; i++) {
-                    taResult.append(lines[i]);
-                }
             } else {
                 Mensajes.falla(this, error);
             }
