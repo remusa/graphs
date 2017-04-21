@@ -5,6 +5,7 @@
  */
 package Model;
 
+import comportamiento.Mensajes;
 import javax.swing.table.TableModel;
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,10 +25,11 @@ public final class Graph {
     private String state;
     private String type;
     private String result;
+    private boolean valid;
     private boolean simple;
     private boolean euler;
     private boolean hamilton;
-    private final int numberNodes;
+    private int numberNodes;
     private final int noColumns;
     private final int noRows;
 
@@ -37,11 +39,12 @@ public final class Graph {
         this.state = route.charAt(0) + "," + route.charAt(1);
         this.type = "";
         this.result = "";
+        this.valid = true;
         this.simple = false;
         this.euler = false;
         this.hamilton = false;
         this.model = null;
-        this.numberNodes = 0;
+        this.numberNodes = numberNodes();
         this.noColumns = 0;
         this.noRows = 0;
     }
@@ -53,6 +56,7 @@ public final class Graph {
         this.state = route.charAt(0) + "," + route.charAt(1);
         this.type = "";
         this.result = "";
+        this.valid = true;
         this.simple = false;
         this.euler = false;
         this.hamilton = false;
@@ -75,6 +79,9 @@ public final class Graph {
     }
 
     public void automata() {
+        numberNodes = numberNodes();
+        
+        System.out.println("Nodes: " + numberNodes);
         System.out.println("Graph: ");
         print(graph);
         result = "";
@@ -86,42 +93,48 @@ public final class Graph {
             result += "State " + i + ": \t" + state + "\tvalue: " + graph.get(state) + "\n";
             if (graph.get(state).equals("0")) {
                 System.out.println("No es una ruta");
+                result += "No es una ruta";
+                valid = false;
                 break;
             } else if (graph.get(state).equals("1") || graph.get(state).equals("-")) {
                 state = state.charAt(2) + "," + route.charAt(i);
             }
         }
 
-        finalState = state;
+        if (valid) {
+            finalState = state;
 
-        System.out.print("Path: ");
-        print(paths);
+            System.out.print("\nPath: ");
+            print(paths);
 
-        if (graph.containsKey(state)) {
-            type = checkType();
+            if (graph.containsKey(state)) {
+                type = checkType();
 
-            result += "\n\nRoute: \t" + route + "\n"
-                    + "Initial state: \t" + initialState + "\tvalue: " + graph.get(initialState) + "\n"
-                    + "Final state: \t" + state + "\tvalue: " + graph.get(state) + "\n"
-                    + "Type: \t" + type + "\n"
-                    + "Simple: \t" + String.valueOf(simple) + "\n";
+                result += "\n\nRoute: \t" + route + "\n"
+                        + "Initial state: \t" + initialState + "\tvalue: " + graph.get(initialState) + "\n"
+                        + "Final state: \t" + state + "\tvalue: " + graph.get(state) + "\n"
+                        + "Type: \t" + type + "\n"
+                        + "Simple: \t" + String.valueOf(simple) + "\n";
 
-            System.out.println("\nRoute: \t\t" + route);
-            System.out.println("Initial state: \t" + initialState + "\tvalue: \t" + graph.get(initialState));
-            System.out.println("Final state: \t" + state + "\tvalue: \t" + graph.get(state));
-            System.out.println("Type: \t\t" + type);
-            System.out.println("Simple: \t" + String.valueOf(simple));
+                System.out.println("\nRoute: \t\t" + route);
+                System.out.println("Initial state: \t" + initialState + "\tvalue: \t" + graph.get(initialState));
+                System.out.println("Final state: \t" + state + "\tvalue: \t" + graph.get(state));
+                System.out.println("Type: \t\t" + type);
+                System.out.println("Simple: \t" + String.valueOf(simple));
 
-            if ("Cycle".equals(type)) {
-                result += "Euler: \t" + String.valueOf(euler) + "\n"
-                        + "Hamilton: \t" + String.valueOf(hamilton) + "\n";
+                if ("Cycle".equals(type)) {
+                    result += "Euler: \t" + String.valueOf(euler) + "\n"
+                            + "Hamilton: \t" + String.valueOf(hamilton) + "\n";
 
-                System.out.println("Euler: \t\t" + String.valueOf(euler));
-                System.out.println("Hamilton: \t" + String.valueOf(hamilton));
+                    System.out.println("Euler: \t\t" + String.valueOf(euler));
+                    System.out.println("Hamilton: \t" + String.valueOf(hamilton));
+                }
+            } else {
+                System.out.println("No es una ruta");
+                result += "No es una ruta";
             }
-        } else {
-            System.out.println("No es una ruta");
         }
+
     }
 
     /**
@@ -143,7 +156,7 @@ public final class Graph {
     }
 
     /**
-     * Simple or not
+     * Simple
      *
      * @return
      */
@@ -167,7 +180,7 @@ public final class Graph {
     }
 
     /**
-     * Euler path/cycle
+     * Euler cycle (path)
      * Visits every edge exactly once
      *
      * @return
@@ -177,13 +190,13 @@ public final class Graph {
         for (int i = 0; i < route.length(); i++) {
             hash.add(route.charAt(i));
         }
-        if (hash.size() % 2 == 0) { //puede ser Euler si el no. de vértices es par
-            System.out.println("Can be Euler \tchars: " + hash.size());
+        if (hash.size() % 2 == 0) { //even number of vertices
+
+            
+            
             return true;
-        } else {
-            System.out.println("chars: " + hash.size());
-            return false;
         }
+        return false;
     }
 
     /**
@@ -193,29 +206,38 @@ public final class Graph {
      * @return
      */
     private boolean checkHamilton(String route) {
-        HashMap<Character, Integer> map = new HashMap<>();
-        for (char ch : route.toCharArray()) {
-            if (map.containsKey(ch)) {
-                int val = map.get(ch);
-                map.put(ch, val + 1);
-            } else {
-                map.put(ch, 1);
-            }
+        HashSet<Character> hash = new HashSet<>();
+        for (int i = 0; i < route.length(); i++) {
+            hash.add(route.charAt(i));
         }
-        System.out.println("HAMILTON: " + map);
+
         int greaterValue = 0;
-        for (Integer value : map.values()) {
-            if (value > greaterValue) {
-                greaterValue = value;
+        if (hash.size() == numberNodes) {
+            HashMap<Character, Integer> map = new HashMap<>();
+            for (char ch : route.toCharArray()) {
+                if (map.containsKey(ch)) {
+                    int val = map.get(ch);
+                    map.put(ch, val + 1);
+                } else {
+                    map.put(ch, 1);
+                }
             }
+
+            for (Integer value : map.values()) {
+                if (value > greaterValue) {
+                    greaterValue = value;
+                }
+            }
+            return hamilton = greaterValue == 1;
         }
-        return hamilton = greaterValue == 1;
+        return false;
     }
 
     public int numberNodes() {
         HashSet<Character> hash = new HashSet<>();
-        for (int i = 0; i < route.length(); i++) {
-            hash.add(route.charAt(i));
+        for (HashMap.Entry<String, String> key : graph.entrySet()) {
+            char node = key.getKey().charAt(0);
+            hash.add(node);
         }
         return hash.size();
     }
