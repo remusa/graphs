@@ -222,7 +222,7 @@ public class VwMain extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,6 +289,14 @@ public class VwMain extends javax.swing.JFrame {
             DefaultTableModel model = new DefaultTableModel();
             model.setRowCount(noNodes);
             model.setColumnCount(noNodes);
+
+            for (int i = 0; i < model.getRowCount(); i++) {
+                for (int j = 0; j < model.getColumnCount(); j++) {
+                    if (((char) (i + 65)) == model.getColumnName(j).charAt(0)) {
+                        model.setValueAt("-", i, j);
+                    }
+                }
+            }
 
             tbMatrix.setModel(model);
             tbMatrix.setEnabled(true);
