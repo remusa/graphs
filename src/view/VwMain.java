@@ -59,6 +59,7 @@ public class VwMain extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mnuAbout = new javax.swing.JMenuItem();
+        mnuContent = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Grafos");
@@ -241,6 +242,14 @@ public class VwMain extends javax.swing.JFrame {
         });
         jMenu1.add(mnuAbout);
 
+        mnuContent.setText("Teoría");
+        mnuContent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuContentActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuContent);
+
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
@@ -400,6 +409,10 @@ public class VwMain extends javax.swing.JFrame {
         new VwAbout().setVisible(true);
     }//GEN-LAST:event_mnuAboutActionPerformed
 
+    private void mnuContentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuContentActionPerformed
+        new VwContent().setVisible(true);
+    }//GEN-LAST:event_mnuContentActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -517,6 +530,7 @@ public class VwMain extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenuItem mnuAbout;
+    private javax.swing.JMenuItem mnuContent;
     private javax.swing.JRadioButton rbCycle;
     private javax.swing.JRadioButton rbTrajectory;
     public javax.swing.JTextArea taResult;
